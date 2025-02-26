@@ -1,24 +1,23 @@
-public class Student implements Comparable<Student> {
-    private String name;
-    private double gpa;
+import java.util.Objects;
 
-    public Student(String name, double gpa) {
-        this.name = name;
-        this.gpa = gpa;
-    }
 
-    public String getName() {
-        return name;
-    }
-
-    public double getGpa() {
-        return gpa;
-    }
+public record Student(String name, double gpa) implements Comparable<Student> {
 
     @Override
     public int compareTo(Student other) {
+        if (other == null) {
+            throw new NullPointerException("Cannot compare to null");
+        }
         // Compare by GPA in descending order
         return Double.compare(other.gpa, this.gpa);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return Double.compare(student.gpa, gpa) == 0 && Objects.equals(name, student.name);
     }
 
     @Override
@@ -27,21 +26,5 @@ public class Student implements Comparable<Student> {
                 "name='" + name + '\'' +
                 ", gpa=" + gpa +
                 '}';
-    }
-
-    // Test the Student class
-    public static void main(String[] args) {
-        List<Student> students = new ArrayList<>();
-        students.add(new Student("Alice", 3.5));
-        students.add(new Student("Bob", 3.8));
-        students.add(new Student("Charlie", 3.2));
-
-        Collections.sort(students);
-
-        for (Student student : students) {
-            System.out.println(student);
-        }
-    }
-}
     }
 }

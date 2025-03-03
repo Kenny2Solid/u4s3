@@ -1,7 +1,7 @@
 import java.util.Objects;
 
 
-public record Student(String name, double gpa) implements Comparable<Student> {
+public record  Student(String name, double gpa) implements Comparable<Student> {
 
     @Override
     public int compareTo(Student other) {
